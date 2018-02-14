@@ -1,5 +1,4 @@
 #include "DebugRenderSystem.hpp"
-#include "DebugRenderable.hpp"
 #include "Body.hpp"
 #include "Position.hpp"
 #include <SFML/Graphics/RenderTarget.hpp>

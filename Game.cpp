@@ -1,5 +1,4 @@
 #include "Game.hpp"
-#include "DebugRenderable.hpp"
 #include "DebugRenderSystem.hpp"
 #include "Body.hpp"
 #include "Position.hpp"
