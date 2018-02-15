@@ -15,4 +15,6 @@ class RenderTarget;
 struct Body;
 struct Position;
 
+class CommandQueue;
+
 #endif // COMMON_HPP_INCLUDED

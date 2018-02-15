@@ -2,11 +2,14 @@
 #include "Body.hpp"
 #include "DebugRenderSystem.hpp"
 #include "PhysicsSystem.hpp"
+#include "PlayerController.hpp"
 #include "Position.hpp"
 #include <SFML/Window/Event.hpp>
 
 Game::Game()
         : mWindow(sf::VideoMode(500, 500), "App")
+        , mPlayer(0)
+        , mPlayerController(nullptr)
         , mRotation(0.0f)
         , mIsRunning(true)
 {
@@ -19,6 +22,8 @@ Game::Game()
 
         createObstacle(-100, -150, 30);
         createObstacle(100, 150, 50);
+
+        mPlayerController = std::make_unique<PlayerController>(mPlayer);
 }
 
 Game::~Game()
@@ -28,13 +33,19 @@ Game::~Game()
 
 void Game::update(const sf::Time)
 {
-        handleInput();
-        updateView();
+        processInput();
+
+        while (!mCommandQueue.isEmpty())
+        {
+                mCommandQueue.pop().action(mRegistry);
+        }
 
         for (System::Ptr& system: mFixedSystems)
         {
                 system->update();
         }
+
+        updateView();
 }
 
 void Game::render(const sf::Time)
@@ -49,7 +60,7 @@ void Game::render(const sf::Time)
         mWindow.display();
 }
 
-void Game::handleInput()
+void Game::processInput()
 {
         sf::Event event;
         while (mWindow.pollEvent(event))
@@ -58,19 +69,7 @@ void Game::handleInput()
                         terminate();
         }
 
-        Position& position = mRegistry.get<Position>(mPlayer);
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-                position.position.x += 1.0f;
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-                position.position.x -= 1.0f;
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-                position.position.y += 1.0f;
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-                position.position.y -= 1.0f;
+        mPlayerController->handleRealtimeInput(mCommandQueue);
 }
 
 void Game::updateView()
