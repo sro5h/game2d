@@ -1,7 +1,6 @@
 #include "PhysicsSystem.hpp"
 #include "Body.hpp"
 #include "Position.hpp"
-#include <iostream>
 
 PhysicsSystem::PhysicsSystem(Registry& registry)
         : mRegistry(registry)
