@@ -12,4 +12,7 @@ namespace sf
 class RenderTarget;
 }
 
+struct Body;
+struct Position;
+
 #endif // COMMON_HPP_INCLUDED

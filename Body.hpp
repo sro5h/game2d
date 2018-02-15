@@ -8,6 +8,7 @@ struct Body
         Body();
 
         Shape::Ptr shape;
+        bool dynamic;
 };
 
 #endif // BODY_HPP_INCLUDED

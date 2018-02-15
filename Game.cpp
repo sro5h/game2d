@@ -1,6 +1,7 @@
 #include "Game.hpp"
-#include "DebugRenderSystem.hpp"
 #include "Body.hpp"
+#include "DebugRenderSystem.hpp"
+#include "PhysicsSystem.hpp"
 #include "Position.hpp"
 #include <SFML/Window/Event.hpp>
 
@@ -10,10 +11,11 @@ Game::Game()
         , mIsRunning(true)
 {
         registerSystems();
-        Entity e = mRegistry.create();
-        mRegistry.assign<Position>(e, 0.0f, 0.0f);
-        Body& body = mRegistry.assign<Body>(e);
+        mPlayer = mRegistry.create();
+        mRegistry.assign<Position>(mPlayer, 0.0f, 0.0f);
+        Body& body = mRegistry.assign<Body>(mPlayer);
         body.shape = std::make_unique<Circle>(20.0f);
+        body.dynamic = true;
 
         addObstacle(-100, -150, 30);
         addObstacle(100, 150, 50);
@@ -28,6 +30,11 @@ void Game::update(const sf::Time)
 {
         handleInput();
         updateView();
+
+        for (System::Ptr& system: mFixedSystems)
+        {
+                system->update();
+        }
 }
 
 void Game::render(const sf::Time)
@@ -54,16 +61,16 @@ void Game::handleInput()
         Position& position = mRegistry.get<Position>(mPlayer);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-                position.x += 1.0f;
+                position.position.x += 1.0f;
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-                position.x -= 1.0f;
+                position.position.x -= 1.0f;
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-                position.y += 1.0f;
+                position.position.y += 1.0f;
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-                position.y -= 1.0f;
+                position.position.y -= 1.0f;
 }
 
 void Game::updateView()
@@ -72,7 +79,7 @@ void Game::updateView()
 
         sf::View view = mWindow.getView();
         view.setSize(500, -500);
-        view.setCenter(position.x, position.y);
+        view.setCenter(position.position);
         mWindow.setView(view);
 }
 
@@ -87,6 +94,8 @@ void Game::terminate()
 
 void Game::registerSystems()
 {
+        mFixedSystems.push_back(std::make_unique<PhysicsSystem>(mRegistry));
+
         mRenderSystems.push_back(std::make_unique<DebugRenderSystem>(
                                 mRegistry, mWindow));
 }

@@ -29,6 +29,7 @@ private:
         sf::RenderWindow mWindow;
 
         Registry mRegistry;
+        std::vector<System::Ptr> mFixedSystems;
         std::vector<System::Ptr> mRenderSystems;
 
         Entity mPlayer;

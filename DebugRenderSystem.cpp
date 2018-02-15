@@ -22,7 +22,7 @@ void DebugRenderSystem::update()
                         continue;
 
                 sf::Transform transform;
-                transform.translate(position.x, position.y);
+                transform.translate(position.position);
 
                 mDebugDraw.draw(*body.shape, transform);
         }
