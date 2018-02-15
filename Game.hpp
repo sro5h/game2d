@@ -24,6 +24,7 @@ private:
         void processInput();
         void updateView();
         void terminate();
+        void createPlayer();
         void createObstacle(float x, float y, float r);
         void registerSystems();
 

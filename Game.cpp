@@ -14,12 +14,8 @@ Game::Game()
         , mIsRunning(true)
 {
         registerSystems();
-        mPlayer = mRegistry.create();
-        mRegistry.assign<Position>(mPlayer, 0.0f, 0.0f);
-        Body& body = mRegistry.assign<Body>(mPlayer);
-        body.shape = std::make_unique<Circle>(20.0f);
-        body.dynamic = true;
 
+        createPlayer();
         createObstacle(-100, -150, 30);
         createObstacle(100, 150, 50);
 
@@ -97,6 +93,15 @@ void Game::registerSystems()
 
         mRenderSystems.push_back(std::make_unique<DebugRenderSystem>(
                                 mRegistry, mWindow));
+}
+
+void Game::createPlayer()
+{
+        mPlayer = mRegistry.create();
+        mRegistry.assign<Position>(mPlayer, 0.0f, 0.0f);
+        Body& body = mRegistry.assign<Body>(mPlayer);
+        body.shape = std::make_unique<Circle>(20.0f);
+        body.dynamic = true;
 }
 
 void Game::createObstacle(float x, float y, float r)
