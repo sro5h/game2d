@@ -17,8 +17,8 @@ Game::Game()
         body.shape = std::make_unique<Circle>(20.0f);
         body.dynamic = true;
 
-        addObstacle(-100, -150, 30);
-        addObstacle(100, 150, 50);
+        createObstacle(-100, -150, 30);
+        createObstacle(100, 150, 50);
 }
 
 Game::~Game()
@@ -100,7 +100,7 @@ void Game::registerSystems()
                                 mRegistry, mWindow));
 }
 
-void Game::addObstacle(float x, float y, float r)
+void Game::createObstacle(float x, float y, float r)
 {
         Entity e = mRegistry.create();
         mRegistry.assign<Position>(e, x, y);

@@ -22,7 +22,7 @@ private:
         void handleInput();
         void updateView();
         void terminate();
-        void addObstacle(float x, float y, float r);
+        void createObstacle(float x, float y, float r);
         void registerSystems();
 
 private:
