@@ -1,7 +1,7 @@
 #ifndef BODY_HPP_INCLUDED
 #define BODY_HPP_INCLUDED
 
-#include "Shape.hpp"
+#include "Collision.hpp"
 
 struct Body
 {

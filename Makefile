@@ -4,11 +4,11 @@ CXXFLAGS = -I. -Wall -Wextra -std=c++14
 LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system
 
 PROJECT = a.out
-PROJECT_HEADERS = Common.hpp System.hpp Game.hpp Position.hpp\
+PROJECT_HEADERS = Common.hpp System.hpp Game.hpp Position.hpp Collision.hpp\
                   DebugRenderSystem.hpp Body.hpp PhysicsSystem.hpp\
                   PlayerController.hpp Command.hpp CommandQueue.hpp
 PROJECT_SOURCES = main.cpp Game.cpp Position.cpp DebugRenderSystem.cpp Body.cpp\
-                  Shape.cpp DebugDraw.cpp PhysicsSystem.cpp\
+                  Collision.cpp DebugDraw.cpp PhysicsSystem.cpp\
                   PlayerController.cpp Command.cpp CommandQueue.cpp
 PROJECT_OBJECTS = $(subst .cpp,.o,$(PROJECT_SOURCES))
 

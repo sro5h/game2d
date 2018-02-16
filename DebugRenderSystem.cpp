@@ -21,9 +21,6 @@ void DebugRenderSystem::update()
                 if (!body.shape)
                         continue;
 
-                sf::Transform transform;
-                transform.translate(position.position);
-
-                mDebugDraw.draw(*body.shape, transform);
+                mDebugDraw.draw(*body.shape, position.position);
         }
 }

@@ -34,13 +34,8 @@ void PhysicsSystem::update()
 void PhysicsSystem::collide(const Body& bodyA, Position& positionA,
                 const Body& bodyB, Position& positionB)
 {
-        sf::Transform transformA;
-        transformA.translate(positionA.position);
-        sf::Transform transformB;
-        transformB.translate(positionB.position);
-
         Manifold m;
-        m.solve(*(bodyA.shape), transformA, *(bodyB.shape), transformB);
+        m.solve(*(bodyA.shape), positionA.position, *(bodyB.shape), positionB.position);
 
         if (m.colliding)
         {
