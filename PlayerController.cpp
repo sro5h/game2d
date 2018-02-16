@@ -1,25 +1,7 @@
 #include "PlayerController.hpp"
 #include "CommandQueue.hpp"
+#include "MoveCommand.hpp"
 #include "Position.hpp"
-
-struct EntityMover
-{
-        EntityMover(Entity entity, float x, float y)
-                : entity(entity)
-                , velocity(x, y)
-        {
-        }
-
-        void operator()(Registry& registry) const
-        {
-                Position& position = registry.get<Position>(entity);
-
-                position.position += velocity;
-        }
-
-        Entity entity;
-        sf::Vector2f velocity;
-};
 
 PlayerController::PlayerController(Entity player)
         : mPlayer(player)
@@ -75,8 +57,8 @@ void PlayerController::initActionBinding()
 {
         const float speed = 1.0f;
 
-        mActionBinding[Action::MoveRight].action = EntityMover(mPlayer, speed, 0.0f);
-        mActionBinding[Action::MoveLeft].action = EntityMover(mPlayer, -speed, 0.0f);
-        mActionBinding[Action::MoveUp].action = EntityMover(mPlayer, 0.0f, speed);
-        mActionBinding[Action::MoveDown].action = EntityMover(mPlayer, 0.0f, -speed);
+        mActionBinding[Action::MoveRight].action = MoveCommand(mPlayer, speed, 0.0f);
+        mActionBinding[Action::MoveLeft].action = MoveCommand(mPlayer, -speed, 0.0f);
+        mActionBinding[Action::MoveUp].action = MoveCommand(mPlayer, 0.0f, speed);
+        mActionBinding[Action::MoveDown].action = MoveCommand(mPlayer, 0.0f, -speed);
 }
